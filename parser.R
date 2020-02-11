@@ -1,8 +1,9 @@
 library(plyr)
 library(readr)
 library(dplyr)
-temp = list.files(pattern="*",full.names=TRUE)
-tbl <- sapply(temp, read_csv,col_name =c("time", "value"), simplify=FALSE) %>% 
+
+files <- list.files("HR",full.names=TRUE)
+tbl <- sapply(files, read_csv,col_name =c("time", "value"), simplify=FALSE) %>% 
   bind_rows(.id = "id")
 
 #Conver timezone
