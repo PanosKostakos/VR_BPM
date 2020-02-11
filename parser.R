@@ -28,6 +28,24 @@ dev.copy(png,'./figures/Box2.png')
 dev.off()
 
 
+# Violin basic
+library(hrbrthemes)
+library(viridis)
+tbl %>%
+  ggplot( aes(x=id, y=value, fill=id)) +
+  geom_violin() +
+  scale_fill_viridis(discrete = TRUE, alpha=0.6, option="A") +
+  theme_ipsum() +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("Violin chart") +
+  xlab("")
+dev.copy(png,'./figures/violin.png')
+dev.off()
+
+
 library(ggjoy)
 
 bpm.min <- min(tbl$value, na.rm = T)
