@@ -2,18 +2,42 @@ library(plyr)
 library(readr)
 library(dplyr)
 
-files <- list.files("HR",full.names=TRUE)
+files <- list.files("data_BMP",full.names=TRUE)
 tbl <- sapply(files, read_csv,col_name =c("time", "value"), simplify=FALSE) %>% 
   bind_rows(.id = "id")
 
-#Conver timezone
+tbl$id<-stringr::str_replace(tbl$id, "data_BMP/", "")
 
-tbl$time <- format(tbl$time,usetz=TRUE, tz="Europe/Helsinki")
+#Conver timezone
+attr(tbl$time, "tzone") <- "Europe/Helsinki"
+
+
+
 
 #Levels
-tbl$id = factor(tbl$id, levels = c('./user4', './user5', "./user6", "./user7",
-                                  "./user8", "./user9"),
-                        labels = c(4,5,6,7,8,9))
+tbl$id = factor(tbl$id, levels = c('user4', 'user5', "user6", "user7",
+                                  "user8", "user9",'user10', 'user11', "user12", "user13",
+                                  "user14", "user15","user16", "user17"),
+                        labels = c(4,5,6,7,8,9,10,11,12,13,14,15,16,17))
+
+
+# Plot all time series 
+
+#ggplot(tbl,aes(x=time, y=value, group=id, color=id)) +geom_line()
+
+
+# Plot time series with vertical lines
+
+user4<- tbl %>% filter(id == "4") 
+user4_cp <- 
+
+plot(user4$time, user4$value, type='l')
+
+v=as.numeric(user4$time[c(4,600,44)])
+abline(v=v, lwd=2, col='red')
+
+
+
 
 #Ploting min and max for all users
 library(ggplot2)
@@ -54,10 +78,10 @@ bpm.max <- max(tbl$value, na.rm = T)
 
 breaks <- c(
   bpm.min,
-  (bpm.min + 109) / 2,
-  (109 + 123) / 2, 
-  (123 + 138) / 2, 
-  (138 + 164) / 2,
+  (bpm.min + 70) / 2,
+  (109 + 80) / 2, 
+  (80 + 90) / 2, 
+  (90 + 107) / 2,
   bpm.max
 )
 
