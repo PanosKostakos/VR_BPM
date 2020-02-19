@@ -1,43 +1,298 @@
 library(plyr)
 library(readr)
 library(dplyr)
+library(tidyverse)
 
-files <- list.files("data_BMP",full.names=TRUE)
+files <- list.files("data_BMP/raw",full.names=TRUE)
 tbl <- sapply(files, read_csv,col_name =c("time", "value"), simplify=FALSE) %>% 
   bind_rows(.id = "id")
 
-tbl$id<-stringr::str_replace(tbl$id, "data_BMP/", "")
+tbl$id<-stringr::str_replace(tbl$id, "data_BMP/raw/", "")
 
 #Conver timezone
 attr(tbl$time, "tzone") <- "Europe/Helsinki"
 
+#Relative time
+#tbl<- tbl %>% group_by(id) %>% mutate(counter = row_number())
+tbl<- tbl %>% group_by(id) %>% mutate(counter = row_number())
 
+# library(data.table)
+# tbl <- data.table(tbl)
+# tbl[, counter := seq_len(.N), by = id]
+# tbl[, counter := rowid(id)]
 
 
 #Levels
 tbl$id = factor(tbl$id, levels = c('user4', 'user5', "user6", "user7",
                                   "user8", "user9",'user10', 'user11', "user12", "user13",
-                                  "user14", "user15","user16", "user17"),
-                        labels = c(4,5,6,7,8,9,10,11,12,13,14,15,16,17))
+                                  "user14", "user15","user16", "user17","user18","user19", "user20"),
+                        labels = c(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20))
 
 
-# Plot all time series 
 
-#ggplot(tbl,aes(x=time, y=value, group=id, color=id)) +geom_line()
+#Metadata
+library(readr)
+meta_data <- read_tsv("meta_data.csv", col_names = TRUE)
+meta_data$Start_time<- strptime(meta_data$Start_time, format="%d.%m.%Y %H.%M.%S")
+
 
 
 # Plot time series with vertical lines
+user4<- tbl %>% filter(id == "4")
 
-user4<- tbl %>% filter(id == "4") 
-user4_cp <- 
+#start 2020-10-02 02:52:56
 
-plot(user4$time, user4$value, type='l')
-
-v=as.numeric(user4$time[c(4,600,44)])
-abline(v=v, lwd=2, col='red')
-
+meta_data[ ,1:3]
+user4 %>% filter(time == "2020-2-10 14:52:56")
+user4 %>% filter(time == "2020-2-10 14:58:58")        
+# ggplot(data=user4, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,988),colour="#BB0000")
 
 
+# Plot time series with vertical lines
+user5<- tbl %>% filter(id == "5")
+
+meta_data[ ,1:3]
+user5 %>% filter(time == "2020-2-10 15:16:45")
+user5 %>% filter(time == "2020-2-10 15:19:06")          
+# plot(user5$counter, user5$value, type='l')
+# abline(v=c(448,589), lwd=2, col='red')
+# ggplot(data=user5, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,589),colour="#BB0000")
+
+# Plot time series with vertical lines
+user6<- tbl %>% filter(id == "6")
+
+meta_data[ ,1:3]
+user6 %>% filter(time == "2020-2-10 15:37:34")
+user6 %>% filter(time == "2020-2-10 15:40:22")          
+# plot(user6$counter, user6$value, type='l')
+# abline(v=c(455,623), lwd=2, col='red')
+# ggplot(data=user6, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(455,623),colour="#BB0000")
+
+# Plot time series with vertical lines
+user7<- tbl %>% filter(id == "7")
+
+meta_data[ ,1:3]
+user7 %>% filter(time == "2020-2-10 15:57:48")
+user7 %>% filter(time == "2020-2-10 15:59:10")          
+# plot(user7$counter, user7$value, type='l')
+# abline(v=c(455,623), lwd=2, col='red')
+# ggplot(data=user7, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,530),colour="#BB0000")
+
+
+# Plot time series with vertical lines
+user8<- tbl %>% filter(id == "8")
+
+meta_data[ ,1:3]
+user8 %>% filter(time == "2020-2-10 16:23:57")
+user8 %>% filter(time == "2020-2-10 16:25:49")          
+# plot(user8$counter, user8$value, type='l')
+# abline(v=c(552,664), lwd=2, col='red')
+# 
+# ggplot(data=user8, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(552,664),colour="#BB0000")
+
+
+# Plot time series with vertical lines
+user9<- tbl %>% filter(id == "9")
+
+meta_data[ ,1:3]
+user9 %>% filter(time == "2020-2-10 16:47:32")
+user9 %>% filter(time == "2020-2-10 16:49:04")          
+# plot(user9$counter, user9$value, type='l')
+# abline(v=c(598,690), lwd=2, col='red')
+# 
+# ggplot(data=user9, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(598,690),colour="#BB0000")
+
+# Plot time series with vertical lines
+user10<- tbl %>% filter(id == "10")
+
+meta_data[ ,1:3]
+user10 %>% filter(time == "2020-2-11 12:26:54")
+user10 %>% filter(time == "2020-2-11 12:28:35")          
+# plot(user10$counter, user10$value, type='l')
+# abline(v=c(607,708), lwd=2, col='red')
+# ggplot(data=user10, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,708),colour="#BB0000")
+
+
+# Plot time series with vertical lines
+user11<- tbl %>% filter(id == "11")
+
+meta_data[ ,1:3]
+user11 %>% filter(time == "2020-2-11 12:52:13")
+user11 %>% filter(time == "2020-2-11 12:56:16")          
+# plot(user11$counter, user11$value, type='l')
+# abline(v=c(532,775), lwd=2, col='red')
+# ggplot(data=user11, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(532,775),colour="#BB0000")
+
+
+# Plot time series with vertical lines
+user12<- tbl %>% filter(id == "12")
+
+meta_data[ ,1:3]
+user12 %>% filter(time == "2020-2-11 13:20:44")
+user12 %>% filter(time == "2020-2-11 13:22:35")          
+# plot(user12$counter, user12$value, type='l')
+# abline(v=c(574,685), lwd=2, col='red')
+# ggplot(data=user12, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(574,685),colour="#BB0000")
+
+# Plot time series with vertical lines
+user13<- tbl %>% filter(id == "13")
+
+meta_data[ ,1:3]
+user13 %>% filter(time == "2020-2-11 13:43:46")
+user13 %>% filter(time == "2020-2-11 13:46:49")          
+# plot(user13$counter, user13$value, type='l')
+# abline(v=c(556,739), lwd=2, col='red')
+# 
+# ggplot(data=user13, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(556,739),colour="#BB0000")
+
+
+# Plot time series with vertical lines
+user14<- tbl %>% filter(id == "14")
+
+meta_data[ ,1:3]
+user14 %>% filter(time == "2020-2-11 14:07:32")
+user14 %>% filter(time == "2020-2-11 14:09:20")          
+# plot(user14$counter, user14$value, type='l')
+# abline(v=c(528,636), lwd=2, col='red')
+# ggplot(data=user14, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(528,636),colour="#BB0000")
+
+
+# Plot time series with vertical lines
+user15<- tbl %>% filter(id == "15")
+
+meta_data[ ,1:3]
+user15 %>% filter(time == "2020-2-11 14:47:32")
+user15 %>% filter(time == "2020-2-11 14:48:45")          
+# plot(user15$counter, user15$value, type='l')
+# abline(v=c(660,733), lwd=2, col='red')
+# ggplot(data=user15, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(660,733),colour="#BB0000")
+
+
+
+# Plot time series with vertical lines
+user16<- tbl %>% filter(id == "16")
+
+meta_data[ ,1:3]
+user16 %>% filter(time == "2020-2-11 15:11:40")
+user16 %>% filter(time == "2020-2-11 15:14:41")          
+# plot(user16$counter, user16$value, type='l')
+# abline(v=c(607,788), lwd=2, col='red')
+# 
+# ggplot(data=user16, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,788),colour="#BB0000")
+
+
+# Plot time series with vertical lines
+user17<- tbl %>% filter(id == "17")
+
+meta_data[ ,1:3]
+user17 %>% filter(time == "2020-2-11 15:40:15")
+user17 %>% filter(time == "2020-2-11 15:44:43")          
+# plot(user17$counter, user17$value, type='l')
+# abline(v=c(626,894), lwd=2, col='red')
+# 
+
+# # Plot time series with vertical lines
+user18<- tbl %>% filter(id == "18")
+
+meta_data[ ,1:3]
+user18 %>% filter(time == "2020-2-12 14:38:18")
+user18 %>% filter(time == "2020-2-12 14:44:47")
+# plot(user18$counter, user18$value, type='l')
+# abline(v=c(569,958), lwd=2, col='red')
+
+user19<- tbl %>% filter(id == "19")
+meta_data[ ,1:3]
+user19 %>% filter(time == "2020-2-12 15:05:28")
+user19 %>% filter(time == "2020-2-12 15:06:28")          
+# plot(user19$counter, user19$value, type='l')
+# abline(v=c(415,475), lwd=2, col='red')
+
+
+user20<- tbl %>% filter(id == "20")
+meta_data[ ,1:3]
+user20 %>% filter(time == "2020-2-12 15:42:09")
+user20 %>% filter(time == "2020-2-12 15:51:27")          
+# plot(user20$counter, user20$value, type='l')
+# abline(v=c(480,1038), lwd=2, col='red')
+# 
+
+
+
+
+#Multi Plot
+library(gridExtra)
+library(ggplot2)
+p4<- ggplot(data=user4, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,988),colour="#BB0000") +   labs(x = "User4", y = "")
+p5 <- ggplot(data=user5, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,589),colour="#BB0000") +  labs(x = "User5", y = "")
+p6 <- ggplot(data=user6, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(455,623),colour="#BB0000") +  labs(x = "User6", y = "")
+p7 <- ggplot(data=user7, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,530),colour="#BB0000") +  labs(x = "User7", y = "")
+p8 <- ggplot(data=user8, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(552,664),colour="#BB0000") +  labs(x = "User8", y = "")
+p9 <- ggplot(data=user9, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(598,690),colour="#BB0000") +  labs(x = "User9", y = "")
+p10 <- ggplot(data=user10, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,708),colour="#BB0000") +  labs(x = "User10", y = "")
+p11 <- ggplot(data=user11, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(532,775),colour="#BB0000") +  labs(x = "User11", y = "")
+p12 <- ggplot(data=user12, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(574,685),colour="#BB0000") +  labs(x = "User12", y = "")
+p13<- ggplot(data=user13, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(556,739),colour="#BB0000") +  labs(x = "User13", y = "")
+p14 <- ggplot(data=user14, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(528,636),colour="#BB0000") +  labs(x = "User14", y = "")
+p15 <- ggplot(data=user15, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(660,733),colour="#BB0000") +  labs(x = "User15", y = "")
+p16 <- ggplot(data=user16, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,788),colour="#BB0000") +  labs(x = "User16", y = "")
+p17 <- ggplot(data=user17, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,894),colour="#BB0000") +  labs(x = "User17", y = "")
+p18 <- ggplot(data=user18, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(569,958),colour="#BB0000") +  labs(x = "User18", y = "")
+p19 <- ggplot(data=user19, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(415,475),colour="#BB0000") +  labs(x = "User19", y = "")
+p20 <- ggplot(data=user20, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(480,1038),colour="#BB0000") +  labs(x = "User20", y = "")
+
+png("figures/Fig4.png", units="px", width=3000, height=1600, res=300)
+
+grid.arrange(p5,p9,p12,p13,p15,p16,p17,p18,p19,p20, ncol=3,top="Control Group", 
+             left="HR")
+dev.off()
+
+png("figures/Fig5.png", units="px", width=3000, height=1600, res=300)
+grid.arrange(p4,p7, p8,p14, p6,p10,p11, ncol=3,top="Experimental Group", bottom="Users", 
+             left="HR")
+dev.off()
+
+
+
+#HR
+
+tsuser4<- user4 %>% filter(counter %in% (626:988))
+tsuser5<- user5 %>% filter(counter %in% (448:589))
+tsuser6<- user6 %>% filter(counter %in% (455:623))
+tsuser7<- user7 %>% filter(counter %in% (448:530))
+tsuser8<- user8 %>% filter(counter %in% (552:664))
+tsuser9<- user9 %>% filter(counter %in% (598:690))
+
+tsuser10<- user10 %>% filter(counter %in% (607:708))
+tsuser11<- user11 %>% filter(counter %in% (532:775))
+tsuser12<- user12 %>% filter(counter %in% (574:685))
+tsuser13<- user13 %>% filter(counter %in% (556:739))
+tsuser14<- user14%>% filter(counter %in% (528:636))
+tsuser15<- user15 %>% filter(counter %in% (660:733))
+tsuser16<- user16 %>% filter(counter %in% (607:788))
+tsuser17<- user17 %>% filter(counter %in% (626:894))
+tsuser18<- user18 %>% filter(counter %in% (569:958))
+tsuser19<- user19 %>% filter(counter %in% (415:475))
+tsuser20<- user20 %>% filter(counter %in% (480:1038))
+
+
+
+
+
+
+
+ 
+# Smouthing https://www.nature.com/articles/sdata201876
+
+
+#Plot relative times of all users
+
+library(ggplot2)
+ggplot(tbl, aes(x = tbl$counter, y = tbl$value, colour = id)) +
+  geom_line() +
+  geom_smooth(method = "lm") +
+  facet_wrap( ~ id)
+dev.copy(png,'./figures/all.png')
+dev.off()
 
 #Ploting min and max for all users
 library(ggplot2)
@@ -48,7 +303,7 @@ dev.off()
 
 ggplot(data = tbl, mapping = aes(x = id, y = value)) +
   geom_boxplot(alpha = 0) +
-  geom_jitter(alpha = 0.3, color = "tomato")
+  geom_jitter(alpha = 0.1, color = "tomato")
 dev.copy(png,'./figures/Box2.png')
 dev.off()
 
@@ -100,3 +355,7 @@ ggplot(
   )
 dev.copy(png,'./figures/Hist1.png')
 dev.off()
+
+
+
+
