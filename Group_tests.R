@@ -114,6 +114,8 @@ control <- rbind(tsuser5, tsuser9,tsuser12,tsuser13,tsuser15,tsuser16, tsuser17,
 control$counter2 <- seq.int(nrow(control))
 
 
+t.test(control$value,experimental$value )
+
 # Mann-Kendall test 
 
 
