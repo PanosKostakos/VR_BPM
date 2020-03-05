@@ -95,6 +95,19 @@ tsuser7<- user7 %>% filter(counter %in% (448:530))
 tsuser8<- user8 %>% filter(counter %in% (552:664))
 tsuser14<- user14%>% filter(counter %in% (528:636))
 
+tsuser28<- user28%>% filter(counter %in% (587:856))
+tsuser29<- user29%>% filter(counter %in% (509:629))
+tsuser30<- user30%>% filter(counter %in% (610:730))
+tsuser31<- user31%>% filter(counter %in% (469:529))
+tsuser32<- user32%>% filter(counter %in% (497:568))
+tsuser33<- user33%>% filter(counter %in% (479:702))
+tsuser34<- user34%>% filter(counter %in% (428:584))
+tsuser35<- user35%>% filter(counter %in% (519:587))
+tsuser36<- user36%>% filter(counter %in% (420:646))
+
+
+
+
 
 tsuser5<- user5 %>% filter(counter %in% (448:589))
 tsuser9<- user9 %>% filter(counter %in% (598:690))
@@ -108,13 +121,17 @@ tsuser19<- user19 %>% filter(counter %in% (415:475))
 tsuser20<- user20 %>% filter(counter %in% (480:1038))
 
 experimental <- rbind(tsuser4, tsuser6,tsuser10,tsuser11,tsuser7,tsuser8, tsuser14)
+                      , 
+                      tsuser28,tsuser29,tsuser30,tsuser31,tsuser32,tsuser34,
+                      tsuser35,tsuser36)
 experimental$counter2 <- seq.int(nrow(experimental))
 
-control <- rbind(tsuser5, tsuser9,tsuser12,tsuser13,tsuser15,tsuser16, tsuser17, tsuser18, tsuser19,tsuser20)
+control <- rbind(tsuser5, tsuser9,tsuser12,tsuser13,tsuser15,tsuser16, tsuser17, tsuser18, 
+                 tsuser19,tsuser20)
 control$counter2 <- seq.int(nrow(control))
 
 
-t.test(control$value,experimental$value )
+t.test(control$value,experimental$value)
 
 # Mann-Kendall test 
 
@@ -155,12 +172,13 @@ mk.test(control$value)
 #PLOTS
 
 #A
-png("final_HR.png", units="px", width=3000, height=1600, res=300)
+png("Fig_6.png", units="px", width=3000, height=1600, res=300)
 
-par(mfrow=c(1), mgp=c(2,1,0),mai=c(5,0.4,0.2,0.1),mar = c(2,1,4,2) + 0.1)
+par(mfrow=c(1,2), mgp=c(2,1,0),mai=c(1,0.4,0.2,0.1),mar = c(4,4,4,2) + 0.1)
 
-plot(experimental$value, type="l",col="green",  ylab ="Avr. speed",main= "Experimental Group", xlab ="Relative time",cex.lab = 0.8,cex.axis= 0.7)
-plot(control$value, type="l", col="red", main= "Control Group", xlab ="Relative time",cex.lab = 0.8,cex.axis= 0.7)
+plot(experimental$value, type="l",col="green",  ylab ="HR",main= "Experimental Group", xlab ="Relative time",cex.lab = 0.8,cex.axis= 0.7)
+plot(control$value, type="l", col="red", main= "Control Group", ylab ="HR", xlab ="Relative time",cex.lab = 0.8,cex.axis= 0.7)
+dev.off()
 
 
 #B

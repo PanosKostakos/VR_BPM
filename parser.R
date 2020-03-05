@@ -25,15 +25,18 @@ tbl<- tbl %>% group_by(id) %>% mutate(counter = row_number())
 #Levels
 tbl$id = factor(tbl$id, levels = c('user4', 'user5', "user6", "user7",
                                   "user8", "user9",'user10', 'user11', "user12", "user13",
-                                  "user14", "user15","user16", "user17","user18","user19", "user20"),
-                        labels = c(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20))
+                                  "user14", "user15","user16", "user17","user18","user19", "user20",
+                                  "user28", "user29",
+                                  "user30", "user31","user32", "user33","user34","user35", "user36"),
+                        labels = c(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,28,29,30,31,32,33,34,35,36))
 
 
 
 #Metadata
 library(readr)
 meta_data <- read_tsv("meta_data.csv", col_names = TRUE)
-meta_data$Start_time<- strptime(meta_data$Start_time, format="%d.%m.%Y %H.%M.%S")
+meta_data$Start_time<- strptime(meta_data$Start_time, format="%m.%d.%Y %H.%M.%S")
+meta_data$End_time<- strptime(meta_data$End_time, format="%m.%d.%Y %H.%M.%S")
 
 
 
@@ -216,37 +219,98 @@ user20 %>% filter(time == "2020-2-12 15:51:27")
 # abline(v=c(480,1038), lwd=2, col='red')
 # 
 
+user28<- tbl %>% filter(id == "28")
+meta_data[ 18:26,1:3]
+user28 %>% filter(time == "2020-02-27 13:20:20")
+user28 %>% filter(time == "2020-02-27 13:24:49")          
+#ggplot(data=user28, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(587,856),colour="#BB0000") +  labs(x = "User20", y = "")
+
+user29<- tbl %>% filter(id == "29")
+meta_data[ 18:26,1:3]
+user29 %>% filter(time == "2020-02-27 13:55:03")
+user29 %>% filter(time == "2020-02-27 13:57:03")          
+#ggplot(data=user29, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(509,629),colour="#BB0000") +  labs(x = "User20", y = "")
+
+user30<- tbl %>% filter(id == "30")
+meta_data[ 18:26,1:3]
+user30 %>% filter(time == "2020-02-27 14:26:06")
+user30 %>% filter(time == "2020-02-27 14:28:06")          
+ggplot(data=user30, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(610,730),colour="#BB0000") +  labs(x = "User20", y = "")
+
+user31<- tbl %>% filter(id == "31")
+meta_data[ 18:26,1:3]
+user31 %>% filter(time == " 2020-02-27 15:20:35")
+user31 %>% filter(time == " 2020-02-27 15:21:35")          
+ggplot(data=user31, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(469,529),colour="#BB0000") +  labs(x = "User20", y = "")
+
+
+user32<- tbl %>% filter(id == "32")
+meta_data[ 18:26,1:3]
+user32 %>% filter(time == "2020-02-28 13:22:05")
+user32 %>% filter(time == " 2020-02-28 13:23:16")          
+ggplot(data=user32, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(497,568),colour="#BB0000") +  labs(x = "User20", y = "")
+
+
+# user33<- tbl %>% filter(id == "33")
+# meta_data[ 18:26,1:3]
+# user33 %>% filter(time == "2020-02-28 14:15:50")
+# user33 %>% filter(time == "2020-02-28 14:19:33")          
+# ggplot(data=user33, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(479,702),colour="#BB0000") +  labs(x = "User20", y = "")
+
+
+user34<- tbl %>% filter(id == "34")
+meta_data[ 18:26,1:3]
+user34 %>% filter(time == "2020-02-28 15:09:40")
+user34 %>% filter(time == "2020-02-28 15:12:16")          
+ggplot(data=user34, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(428,584),colour="#BB0000") +  labs(x = "User20", y = "")
+
+
+user35<- tbl %>% filter(id == "35")
+meta_data[ 18:26,1:3]
+user35 %>% filter(time == "2020-03-03 12:41:00")
+user35 %>% filter(time == "2020-03-03 12:42:08")          
+ggplot(data=user35, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(519,587),colour="#BB0000") +  labs(x = "User20", y = "")
+
+
+user36<- tbl %>% filter(id == "36")
+meta_data[ 18:26,1:3]
+user36 %>% filter(time == "2020-03-03 13:12:00")
+user36 %>% filter(time == "2020-03-03 13:15:46")          
+ggplot(data=user36, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(420,646),colour="#BB0000") +  labs(x = "User20", y = "")
+
+
+
 
 
 
 #Multi Plot
 library(gridExtra)
 library(ggplot2)
-p4<- ggplot(data=user4, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,988),colour="#BB0000") +   labs(x = "User4", y = "")
-p5 <- ggplot(data=user5, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,589),colour="#BB0000") +  labs(x = "User5", y = "")
-p6 <- ggplot(data=user6, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(455,623),colour="#BB0000") +  labs(x = "User6", y = "")
-p7 <- ggplot(data=user7, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,530),colour="#BB0000") +  labs(x = "User7", y = "")
-p8 <- ggplot(data=user8, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(552,664),colour="#BB0000") +  labs(x = "User8", y = "")
-p9 <- ggplot(data=user9, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(598,690),colour="#BB0000") +  labs(x = "User9", y = "")
-p10 <- ggplot(data=user10, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,708),colour="#BB0000") +  labs(x = "User10", y = "")
-p11 <- ggplot(data=user11, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(532,775),colour="#BB0000") +  labs(x = "User11", y = "")
-p12 <- ggplot(data=user12, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(574,685),colour="#BB0000") +  labs(x = "User12", y = "")
-p13<- ggplot(data=user13, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(556,739),colour="#BB0000") +  labs(x = "User13", y = "")
-p14 <- ggplot(data=user14, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(528,636),colour="#BB0000") +  labs(x = "User14", y = "")
-p15 <- ggplot(data=user15, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(660,733),colour="#BB0000") +  labs(x = "User15", y = "")
-p16 <- ggplot(data=user16, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,788),colour="#BB0000") +  labs(x = "User16", y = "")
-p17 <- ggplot(data=user17, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,894),colour="#BB0000") +  labs(x = "User17", y = "")
-p18 <- ggplot(data=user18, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(569,958),colour="#BB0000") +  labs(x = "User18", y = "")
-p19 <- ggplot(data=user19, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(415,475),colour="#BB0000") +  labs(x = "User19", y = "")
-p20 <- ggplot(data=user20, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(480,1038),colour="#BB0000") +  labs(x = "User20", y = "")
+p4<- ggplot(data=user4, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,988),colour="#BB0000") +   labs(x = "User1", y = "")
+p5 <- ggplot(data=user5, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,589),colour="#BB0000") +  labs(x = "User2", y = "")
+p6 <- ggplot(data=user6, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(455,623),colour="#BB0000") +  labs(x = "User3", y = "")
+p7 <- ggplot(data=user7, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(448,530),colour="#BB0000") +  labs(x = "User4", y = "")
+p8 <- ggplot(data=user8, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(552,664),colour="#BB0000") +  labs(x = "User5", y = "")
+p9 <- ggplot(data=user9, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(598,690),colour="#BB0000") +  labs(x = "User6", y = "")
+p10 <- ggplot(data=user10, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,708),colour="#BB0000") +  labs(x = "User7", y = "")
+p11 <- ggplot(data=user11, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(532,775),colour="#BB0000") +  labs(x = "User8", y = "")
+p12 <- ggplot(data=user12, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(574,685),colour="#BB0000") +  labs(x = "User9", y = "")
+p13<- ggplot(data=user13, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(556,739),colour="#BB0000") +  labs(x = "User10", y = "")
+p14 <- ggplot(data=user14, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(528,636),colour="#BB0000") +  labs(x = "User11", y = "")
+p15 <- ggplot(data=user15, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(660,733),colour="#BB0000") +  labs(x = "User12", y = "")
+p16 <- ggplot(data=user16, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(607,788),colour="#BB0000") +  labs(x = "User13", y = "")
+p17 <- ggplot(data=user17, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,894),colour="#BB0000") +  labs(x = "User14", y = "")
+p18 <- ggplot(data=user18, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(569,958),colour="#BB0000") +  labs(x = "User15", y = "")
+p19 <- ggplot(data=user19, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(415,475),colour="#BB0000") +  labs(x = "User16", y = "")
+p20 <- ggplot(data=user20, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(480,1038),colour="#BB0000") +  labs(x = "User17", y = "")
 
-png("figures/Fig4.png", units="px", width=3000, height=1600, res=300)
+png("figures/Fig5.png", units="px", width=3000, height=1600, res=300)
 
 grid.arrange(p5,p9,p12,p13,p15,p16,p17,p18,p19,p20, ncol=3,top="Control Group", 
              left="HR")
 dev.off()
 
-png("figures/Fig5.png", units="px", width=3000, height=1600, res=300)
+png("figures/Fig5_btm.png", units="px", width=3000, height=1600, res=300)
 grid.arrange(p4,p7, p8,p14, p6,p10,p11, ncol=3,top="Experimental Group", bottom="Users", 
              left="HR")
 dev.off()
