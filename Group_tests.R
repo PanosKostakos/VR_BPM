@@ -1,4 +1,3 @@
-data <- read.csv("data_BMP/questionnair/data", sep = "\t")
 library("MASS")
 library(effsize)
 library(varhandle)
@@ -6,16 +5,16 @@ library("trend")
 library(dplyr)
 library(readr)
 library(ggplot2)
+
 options(scipen=999)
 
-         
+data <- read.csv("data_BMP/questionnair/data", sep = "\t")
+      
 #Group Sampling 
 
 #chategorical 
 gender <- table(data$Group, data$Gender) 
 print(fisher.test(gender,conf.level = 0.95))
-
-
 
 military <- table(data$Group, data$Military.Service.division.) 
 print(fisher.test(military,conf.level = 0.95))
@@ -40,7 +39,8 @@ print(fisher.test(vr))
 #Continues 
 #Welch’s t-test, and Hedges’ g were calculated as a measure of effect size
 #for t test, if t is less than 2 it's non-sig, 
-#if the p is less that 0.05 you reject the null (there is diff)
+#if the p is less that 0.05 reject the null (there is diff)
+
 #AGE
 var.test
 age <- data$Age
@@ -56,9 +56,6 @@ t.test(BMI ~ group, var.equal = TRUE,conf.level=0.95)
 
 
 #HR 
-#First I will measure the variance of the random signal for all ts
-# Then I will run two sided rrod.test (or trend.test) on all ts 
-
 files <- list.files("data_BMP/raw",full.names=TRUE)
 tbl <- sapply(files, read_csv,col_name =c("time", "value"), simplify=FALSE) %>%  bind_rows(.id = "id")
 tbl$id<-stringr::str_replace(tbl$id, "data_BMP/raw/", "")
@@ -84,9 +81,7 @@ var.test(Ga$value, Gb$value)
 t.test(Ga$value, Gb$value, var.equal = FALSE)
 
 
-
 # Checkpoints
-
 tsuser4<- user4 %>% filter(counter %in% (626:988))
 tsuser6<- user6 %>% filter(counter %in% (455:623))
 tsuser10<- user10 %>% filter(counter %in% (607:708))
@@ -104,10 +99,6 @@ tsuser33<- user33%>% filter(counter %in% (479:702))
 tsuser34<- user34%>% filter(counter %in% (428:584))
 tsuser35<- user35%>% filter(counter %in% (519:587))
 tsuser36<- user36%>% filter(counter %in% (420:646))
-
-
-
-
 
 tsuser5<- user5 %>% filter(counter %in% (448:589))
 tsuser9<- user9 %>% filter(counter %in% (598:690))
@@ -135,7 +126,6 @@ t.test(control$value,experimental$value)
 
 # Mann-Kendall test 
 
-
 library(trend)
 
 mk.test(tsuser4$value)
@@ -159,15 +149,6 @@ mk.test(tsuser20$value)
 
 mk.test(experimental$value)
 mk.test(control$value)
-
-
-
-
-
-
-
-
-
 
 #PLOTS
 
