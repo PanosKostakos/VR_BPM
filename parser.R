@@ -30,15 +30,11 @@ tbl$id = factor(tbl$id, levels = c('user4', 'user5', "user6", "user7",
                                   "user30", "user31","user32", "user33","user34","user35", "user36"),
                         labels = c(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,28,29,30,31,32,33,34,35,36))
 
-
-
 #Metadata
 library(readr)
 meta_data <- read_tsv("meta_data.csv", col_names = TRUE)
 meta_data$Start_time<- strptime(meta_data$Start_time, format="%m.%d.%Y %H.%M.%S")
 meta_data$End_time<- strptime(meta_data$End_time, format="%m.%d.%Y %H.%M.%S")
-
-
 
 # Plot time series with vertical lines
 user4<- tbl %>% filter(id == "4")
@@ -279,10 +275,6 @@ user36 %>% filter(time == "2020-03-03 13:15:46")
 ggplot(data=user36, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(420,646),colour="#BB0000") +  labs(x = "User20", y = "")
 
 
-
-
-
-
 #Multi Plot
 library(gridExtra)
 library(ggplot2)
@@ -318,7 +310,6 @@ dev.off()
 
 
 #HR
-
 tsuser4<- user4 %>% filter(counter %in% (626:988))
 tsuser5<- user5 %>% filter(counter %in% (448:589))
 tsuser6<- user6 %>% filter(counter %in% (455:623))
@@ -340,16 +331,7 @@ tsuser20<- user20 %>% filter(counter %in% (480:1038))
 
 
 
-
-
-
-
- 
-# Smouthing https://www.nature.com/articles/sdata201876
-
-
 #Plot relative times of all users
-
 library(ggplot2)
 ggplot(tbl, aes(x = tbl$counter, y = tbl$value, colour = id)) +
   geom_line() +

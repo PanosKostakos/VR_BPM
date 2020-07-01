@@ -10,8 +10,6 @@ library(gridExtra)
 library(reshape2)
 library(TTR)
 
-
-
 gift4<- ts(user4[3], frequency=24)
 birthsComp4 <- decompose(gift4)
 trend_4 <-as.data.frame(birthsComp4$trend)
@@ -121,8 +119,6 @@ trend_20<- trend_20 %>% mutate(counter = row_number())
 ggplot(data=trend_20, aes (x=counter, y=V1))+ geom_line() + geom_vline(xintercept = c(480,1038),colour="#BB0000") +   labs(x = "User4", y = "")
 
 
-
-
 library(gridExtra)
 library(ggplot2)
 p4<- ggplot(data=user4, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(626,988),colour="#BB0000") +   labs(x = "User4", y = "")
@@ -142,8 +138,6 @@ p17 <- ggplot(data=user17, aes (x=counter, y=value)) + geom_line() + geom_vline(
 p18 <- ggplot(data=user18, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(569,958),colour="#BB0000") +  labs(x = "User18", y = "")
 p19 <- ggplot(data=user19, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(415,475),colour="#BB0000") +  labs(x = "User19", y = "")
 p20 <- ggplot(data=user20, aes (x=counter, y=value)) + geom_line() + geom_vline(xintercept = c(480,1038),colour="#BB0000") +  labs(x = "User20", y = "")
-
-
 
 
 grid.arrange(p5,p9,p12,p13,p15,p16,p17,p18,p19,p20, ncol=4,top="No lights condition", bottom="bottom\nlabel", 
